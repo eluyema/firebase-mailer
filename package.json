@@ -1,0 +1,27 @@
+{
+  "name": "web-lab-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "prettier": "^2.5.0"
+  },
+  "scripts": {
+    "prettier:fix": "npx prettier --write . --ignore-path .gitignore",
+    "prettier:check": "npx prettier --check . --ignore-path .gitignore",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eluyema/web-lab-2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eluyema/web-lab-2/issues"
+  },
+  "homepage": "https://github.com/eluyema/web-lab-2#readme"
+}
