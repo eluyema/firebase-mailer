@@ -17,7 +17,7 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WEB_LAB_2_FORM_MAILER }}'
           channelId: live
           projectId: web-lab-2-form-mailer
       - name: Install npm packages for cloud functions
