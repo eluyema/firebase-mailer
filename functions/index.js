@@ -1,11 +1,11 @@
-const functions = require("firebase-functions");
+const functions = require('firebase-functions');
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-const words = []
+const words = [];
 
 exports.helloWorld = functions.https.onRequest((request, response) => {
-  words.push("apple");
-  response.send("words");
+    words.push('apple');
+    response.send('words');
 });
