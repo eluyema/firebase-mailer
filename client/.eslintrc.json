@@ -5,12 +5,18 @@
   },
   "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
   "parserOptions": {
+    "requireConfigFile": false,
+    "ecmaVersion": 12,
+    "sourceType": "module",
     "ecmaFeatures": {
+      "legacyDecorators": true,
       "jsx": true
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+    }
   },
-  "plugins": ["react", "prettier"],
-  "rules": {}
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "plugins": ["react", "prettier"]
 }
