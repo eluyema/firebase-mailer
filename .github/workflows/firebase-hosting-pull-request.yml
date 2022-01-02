@@ -21,6 +21,10 @@ jobs:
         run: |
           cd functions
           npm install
+      - name: Set env for functions
+        run: |
+          firebase functions:config:unset env
+          firebase functions:config:set mailer.user=${{ secrets.MAILER_USER }} mailer.pass=${{ secrets.MAILER_PASS }}"
       - name: Deploy cloud function to Firebase
         uses: w9jds/firebase-action@master
         with:
