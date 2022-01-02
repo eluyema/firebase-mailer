@@ -1,39 +1,65 @@
 'use strict';
 
-const functions = require('firebase-functions');
+require('dotenv').config();
 
-const { getTimeToTomorrow, isToday } = require('./ratelimit/utils');
+const functions = require('firebase-functions');
+const cors = require('cors');
+
+const { getTimeToTomorrow } = require('./ratelimit/utils');
+const mailer = require('./nodemailer/nodemailer');
+const { validateMailData } = require('./validate/validate');
+const { ratelimit } = require('./ratelimit/ratelimit');
 
 const ipCounter = new Map();
 const lastIpDate = new Date();
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  if (!isToday(lastIpDate)) {
-    ipCounter.clear();
-  }
-  lastIpDate.setTime(Date.now());
-  const userIP =
-    (request.headers['x-forwarded-for'] || '').split(',')[0] ||
-    request.connection.remoteAddress;
-  let rateNum = 1;
-  if (ipCounter.has(userIP)) {
-    rateNum = ipCounter.get(userIP) + 1;
-    ipCounter.set(userIP, rateNum);
-  } else {
-    ipCounter.set(userIP, rateNum);
-  }
-  if (rateNum <= 40) {
-    return response.status(200).json({
-      count: ipCounter.get(userIP),
-    });
-  } else {
-    const timeLeft = getTimeToTomorrow();
-    const message =
-      'The number of requests has ended for today' +
-      `\n ${timeLeft.getHours()} hours, ${timeLeft.getMinutes()} ` +
-      'left until new requests appear';
-    return response.status(403).json({
-      message,
-    });
-  }
+exports.mailer = functions.https.onRequest((request, response) => {
+  cors()(request, response, async () => {
+    if (request.method === 'POST') {
+      const isAllowed = ratelimit(request, ipCounter, lastIpDate);
+      if (!isAllowed) {
+        const timeLeft = getTimeToTomorrow();
+        const message =
+          'The number of requests has ended for today' +
+          `\n ${timeLeft.getHours()} hours, ${timeLeft.getMinutes()} ` +
+          'left until new requests appear';
+        return response.status(403).json({
+          message,
+        });
+      } else {
+        const { name, email, text } = request.body;
+        const { dataStatus, isvalid } = validateMailData(name, email, text);
+        if (!isvalid) {
+          const message = dataStatus;
+          return response.status(404).json({
+            message,
+          });
+        }
+        const mail = {
+          from: `${name} <${functions.config().mailer.user}>`,
+          to: email,
+          text,
+        };
+
+        try {
+          await mailer(mail);
+          const message = 'Mail was sent';
+          console.log('env', functions.config().mailer.user);
+          return response.status(200).json({
+            message,
+          });
+        } catch (err) {
+          const message = `Error occurred while sending`;
+          return response.status(400).json({
+            message,
+          });
+        }
+      }
+    } else {
+      const message = 'Method can be only POST';
+      return response.status(404).json({
+        message,
+      });
+    }
+  });
 });

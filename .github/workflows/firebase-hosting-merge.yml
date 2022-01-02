@@ -21,9 +21,11 @@ jobs:
           channelId: live
           projectId: web-lab-2-form-mailer
       - name: Install npm packages for cloud functions
+        run: cd functions && npm install
+      - name: Set env for functions
         run: |
-          cd functions
-          npm install
+          firebase functions:config:unset env
+          firebase functions:config:set mailer.user=${{ secrets.MAILER_USER }} mailer.pass=${{ secrets.MAILER_PASS }}"
       - name: Deploy cloud function to Firebase
         uses: w9jds/firebase-action@master
         with:
