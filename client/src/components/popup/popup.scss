@@ -1,21 +1,21 @@
-@import url('./styles/color-palettes.scss');
+@import '../../styles/variables.scss';
 
 .popup {
   position: absolute;
   right: 20px;
   bottom: 20px;
   width: 140px;
-  color: $spinner-background;
+  color: var(--spinner-background);
 }
 .popup > div {
   padding: 5px 10px 10px;
   border-radius: 10px;
 }
 .popup-error {
-  background-color: $popup-error;
+  background-color: var(--popup-error);
 }
 .popup-success {
-  background-color: $popup-success;
+  background-color: var(--popup-success);
 }
 .popup-header {
   display: flex;
