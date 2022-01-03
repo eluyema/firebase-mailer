@@ -1,3 +1,5 @@
+@import url('./styles/color-palettes.scss');
+
 .popup {
   position: absolute;
   right: 20px;
@@ -10,10 +12,10 @@
   border-radius: 10px;
 }
 .popup-error {
-  background-color: red;
+  background-color: $popup-error;
 }
 .popup-success {
-  background-color: green;
+  background-color: $popup-success;
 }
 .popup-header {
   display: flex;
