@@ -30,7 +30,7 @@ function App() {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({ mode: 'onBlur' });
+  } = useForm({ mode: 'onChange' });
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const onSubmit = async (data) => {
