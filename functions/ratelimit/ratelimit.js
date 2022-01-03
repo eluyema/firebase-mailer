@@ -13,7 +13,7 @@ function ratelimit(request, ipCounter, lastIpDate) {
   let rateNum = 1;
   if (ipCounter.has(userIP)) {
     rateNum = ipCounter.get(userIP) + 1;
-    ipCounter.set(userIP, rateNum);
+    if (rateNum <= 30) ipCounter.set(userIP, rateNum);
   } else {
     ipCounter.set(userIP, rateNum);
   }
