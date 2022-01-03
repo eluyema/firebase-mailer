@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const functions = require('firebase-functions');
 const cors = require('cors');
+const sanitizeHtml = require('sanitize-html');
 
 const { getTimeToTomorrow } = require('./ratelimit/utils');
 const mailer = require('./nodemailer/nodemailer');
@@ -40,7 +41,7 @@ exports.mailer = functions.https.onRequest((request, response) => {
         const mail = {
           from: `${name} <mr.mailer.web.lab.2@gmail.com>`,
           to: email,
-          text,
+          text: sanitizeHtml(text),
         };
 
         try {
