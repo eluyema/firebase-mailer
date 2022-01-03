@@ -12,7 +12,6 @@ const initialState = {
   popupIsError: false,
 };
 function reducer(state, action) {
-  console.log(action.payload);
   switch (action.type) {
     case 'spinnerStatus':
       return { ...state, spinnerStatus: action.payload };
@@ -52,7 +51,6 @@ function App() {
     dispatch({ type: 'spinnerStatus', payload: false });
     dispatch({ type: 'popupIsError', payload: response.status !== 200 });
     dispatch({ type: 'popupStatus', payload: true });
-    console.log(state);
   };
   return (
     <div className="form-wrapper">
