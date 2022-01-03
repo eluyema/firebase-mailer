@@ -19,9 +19,11 @@ exports.mailer = functions.https.onRequest((request, response) => {
       const isAllowed = ratelimit(request, ipCounter, lastIpDate);
       if (!isAllowed) {
         const timeLeft = getTimeToTomorrow();
+        const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        const minutes = Math.round(timeLeft / (1000 * 60) - hours * 60);
         const message =
-          'The number of requests has ended for today' +
-          `\n ${timeLeft.getHours()} hours, ${timeLeft.getMinutes()} ` +
+          'The number of requests has ended for today. ' +
+          `${hours} hours, ${minutes} minutes ` +
           'left until new requests appear';
         return response.status(403).json({
           message,
@@ -36,7 +38,7 @@ exports.mailer = functions.https.onRequest((request, response) => {
           });
         }
         const mail = {
-          from: `${name} <${functions.config().mailer.user}>`,
+          from: `${name} <mr.mailer.web.lab.2@gmail.com>`,
           to: email,
           text,
         };
@@ -44,7 +46,6 @@ exports.mailer = functions.https.onRequest((request, response) => {
         try {
           await mailer(mail);
           const message = 'Mail was sent';
-          console.log('env', functions.config().mailer.user);
           return response.status(200).json({
             message,
           });

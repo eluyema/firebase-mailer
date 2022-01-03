@@ -17,7 +17,7 @@ function ratelimit(request, ipCounter, lastIpDate) {
   } else {
     ipCounter.set(userIP, rateNum);
   }
-  return rateNum <= 40;
+  return rateNum <= 30;
 }
 
 module.exports = { ratelimit };
