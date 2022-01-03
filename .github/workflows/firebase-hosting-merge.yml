@@ -31,7 +31,7 @@ jobs:
       - name: Set env for functions
         uses: w9jds/firebase-action@master
         with:
-          args: functions:config:set mailer.user=${{ secrets.MAILER_USER }} mailer.pass=${{ secrets.MAILER_PASS }}"
+          args: functions:config:set mailer.user="${{ secrets.MAILER_USER }}" mailer.pass="${{ secrets.MAILER_PASS }}"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: Deploy cloud function to Firebase
