@@ -22,10 +22,16 @@ jobs:
           projectId: web-lab-2-form-mailer
       - name: Install npm packages for cloud functions
         run: cd functions && npm install
+      - name: Unset previous env for functions
+        uses: w9jds/firebase-action@master
+        with:
+          args: functions:config:unset env
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: Set env for functions
         uses: w9jds/firebase-action@master
         with:
-          args: firebase functions:config:unset env && firebase functions:config:set mailer.user=${{ secrets.MAILER_USER }} mailer.pass=${{ secrets.MAILER_PASS }}"
+          args: functions:config:set mailer.user=${{ secrets.MAILER_USER }} mailer.pass=${{ secrets.MAILER_PASS }}"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: Deploy cloud function to Firebase
