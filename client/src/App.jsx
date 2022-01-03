@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import './App.scss';
-import errorIcon from './images/error.svg';
+import '/web-lab-2/client/App.scss';
+import errorIcon from '/web-lab-2/client/images/error.svg';
 function App() {
   const {
     register,

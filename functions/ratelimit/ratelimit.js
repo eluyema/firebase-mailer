@@ -1,6 +1,6 @@
 'use strict';
 
-const { isToday } = require('./utils');
+const { isToday } = require('/web-lab-2/functions/ratelimit/utils');
 
 function ratelimit(request, ipCounter, lastIpDate) {
   if (!isToday(lastIpDate)) {

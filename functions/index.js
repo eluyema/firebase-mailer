@@ -5,10 +5,12 @@ require('dotenv').config();
 const functions = require('firebase-functions');
 const cors = require('cors');
 
-const { getTimeToTomorrow } = require('./ratelimit/utils');
-const mailer = require('./nodemailer/nodemailer');
-const { validateMailData } = require('./validate/validate');
-const { ratelimit } = require('./ratelimit/ratelimit');
+const {
+  getTimeToTomorrow,
+} = require('/web-lab-2/functions/nodemailer/nodemailer');
+const mailer = require('/web-lab-2/functions/nodemailer/nodemailer');
+const { validateMailData } = require('/web-lab-2/functions/validate/validate');
+const { ratelimit } = require('/web-lab-2/functions/ratelimit/ratelimit');
 
 const ipCounter = new Map();
 const lastIpDate = new Date();
