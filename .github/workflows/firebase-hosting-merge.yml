@@ -21,7 +21,8 @@ jobs:
           channelId: live
           projectId: web-lab-2-form-mailer
       - name: Install npm packages for cloud functions
-        run: cd functions && npm install
+        working-directory: ./functions
+        run: npm ci
       - name: Unset previous env for functions
         uses: w9jds/firebase-action@master
         with:

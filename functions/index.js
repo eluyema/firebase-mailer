@@ -4,8 +4,6 @@ require('dotenv').config();
 
 const functions = require('firebase-functions');
 const sanitizeHtml = require('sanitize-html');
-
-const { getTimeToTomorrow } = require('./ratelimit/utils');
 const mailer = require('./nodemailer/nodemailer');
 const { validateMailData } = require('./validate/validate');
 const { ratelimit } = require('./ratelimit/ratelimit');
@@ -17,14 +15,9 @@ exports.mailer = functions.https.onRequest(async (request, response) => {
   if (request.method === 'POST') {
     const isAllowed = ratelimit(request, ipCounter, lastIpDate);
     if (!isAllowed) {
-      const timeLeft = getTimeToTomorrow();
-      const hours = Math.floor(timeLeft / (1000 * 60 * 60));
-      const minutes = Math.round(timeLeft / (1000 * 60) - hours * 60);
       const message =
-        'The number of requests has ended for today. ' +
-        `${hours} hours, ${minutes} minutes ` +
-        'left until new requests appear';
-      return response.status(529).json({
+        'The number of requests has ended. Please try again later';
+      return response.status(429).json({
         message,
       });
     } else {
@@ -37,7 +30,7 @@ exports.mailer = functions.https.onRequest(async (request, response) => {
         });
       }
       const mail = {
-        from: `${name}`,
+        from: `${name} <${functions.config().mailer.user}>`,
         to: email,
         text: sanitizeHtml(text),
       };
@@ -49,7 +42,7 @@ exports.mailer = functions.https.onRequest(async (request, response) => {
           message,
         });
       } catch (err) {
-        const message = `Error occurred while sending`;
+        const message = `Error occurred while sending. Check mail for correctness`;
         return response.status(400).json({
           message,
         });
