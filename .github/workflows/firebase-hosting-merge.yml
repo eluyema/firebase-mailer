@@ -14,13 +14,13 @@ jobs:
         run: npm run prettier:fix
       - name: Eslint client
         working-directory: ./client
-        run: npm run eslint
+        run: npm run eslint:fix
       - name: Stylelint client
         working-directory: ./client
-        run: npm run stylelint
+        run: npm run stylelint:fix
       - name: Eslint functions
         working-directory: ./functions
-        run: npm run eslint
+        run: npm run eslint:fix
       - uses: actions/checkout@v2
       - name: Start build
         working-directory: ./client
