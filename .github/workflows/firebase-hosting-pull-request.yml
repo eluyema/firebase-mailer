@@ -14,9 +14,7 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: |
-            ~/client/.npm
-            ~/functions/.npm
+          path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
