@@ -11,6 +11,9 @@ const initialState = {
   popupMessage: '',
   popupIsError: false,
 };
+
+const EMPTY_FIELD_ERROR_MESSAGE = 'Поле должно быть заполненно';
+
 function reducer(state, action) {
   switch (action.type) {
     case 'spinnerStatus':
@@ -35,22 +38,24 @@ function App() {
   const onSubmit = async (data) => {
     dispatch({ type: 'spinnerStatus', payload: true });
     dispatch({ type: 'popupStatus', payload: false });
-
-    const response = await fetch(
-      'https://us-central1-web-lab-2-form-mailer.cloudfunctions.net/mailer',
-      {
+    try {
+      const response = await fetch('/api/mailer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-      }
-    );
-    const { message } = await response.json();
-    dispatch({ type: 'popupMessage', payload: message });
-    dispatch({ type: 'spinnerStatus', payload: false });
-    dispatch({ type: 'popupIsError', payload: response.status !== 200 });
-    dispatch({ type: 'popupStatus', payload: true });
+      });
+      const { message } = await response.json();
+      dispatch({ type: 'popupIsError', payload: response.status !== 200 });
+      dispatch({ type: 'popupMessage', payload: message });
+    } catch (error) {
+      dispatch({ type: 'popupIsError', payload: true });
+      dispatch({ type: 'popupMessage', payload: 'Connection error' });
+    } finally {
+      dispatch({ type: 'spinnerStatus', payload: false });
+      dispatch({ type: 'popupStatus', payload: true });
+    }
   };
   return (
     <div className="form-wrapper">
@@ -69,7 +74,7 @@ function App() {
           <p className="input-name">Your name</p>
           <input
             {...register('name', {
-              required: { value: true, message: 'Поле должно быть заполненно' },
+              required: { value: true, message: EMPTY_FIELD_ERROR_MESSAGE },
             })}
             className="text-input"
           />
@@ -86,7 +91,7 @@ function App() {
           <p className="input-name">Recipient email</p>
           <input
             {...register('email', {
-              required: { value: true, message: 'Поле должно быть заполненно' },
+              required: { value: true, message: EMPTY_FIELD_ERROR_MESSAGE },
               pattern: {
                 value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                 message: 'Вписан неккоректный email',
@@ -107,7 +112,7 @@ function App() {
           <p className="input-name">Your message</p>
           <textarea
             {...register('text', {
-              required: { value: true, message: 'Поле должно быть заполненно' },
+              required: { value: true, message: EMPTY_FIELD_ERROR_MESSAGE },
             })}
             className="textarea-input"
           />
