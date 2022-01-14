@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cache node modules
+        id: npmCacheStep
         uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
