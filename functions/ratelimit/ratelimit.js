@@ -6,7 +6,7 @@ function ratelimit(request, ipCounter) {
     request.connection.remoteAddress;
   let rateNum = ipCounter.get(userIP) || 1;
 
-  ipCounter.set(userIP, rateNum++);
+  ipCounter.set(userIP, ++rateNum);
 
   return rateNum <= 5;
 }
