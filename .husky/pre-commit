@@ -4,6 +4,7 @@
 npm run prettier:check
 cd client
 npm run eslint:check
+npm run stylelint:check
 cd ..
 cd functions
 npm run eslint:check
