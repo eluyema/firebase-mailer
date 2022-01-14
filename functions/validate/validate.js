@@ -7,19 +7,18 @@ function validateEmail(email) {
   return false;
 }
 function validateMailData(name, email, text) {
-  let dataStatus = 'Data is valid';
-  let isValid = true;
   if (!(text && name && email)) {
-    dataStatus = 'Some of requested data is empty';
-    isValid = false;
+    return {
+      dataStatus: 'Some of requested data is empty',
+      isValid: false,
+    };
   }
   if (!validateEmail(email)) {
-    dataStatus = 'Email is not valid';
-    isValid = false;
+    return { dataStatus: 'Email is not valid', isValid: false };
   }
   return {
-    dataStatus,
-    isValid,
+    dataStatus: 'Data is valid',
+    isValid: true,
   };
 }
 
