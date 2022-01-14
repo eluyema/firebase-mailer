@@ -14,7 +14,6 @@ const ipCounter = new Map();
 const lastIpDate = new Date();
 
 exports.mailer = functions.https.onRequest(async (request, response) => {
-  response.set('Access-Control-Allow-Origin', '*');
   if (request.method === 'POST') {
     const isAllowed = ratelimit(request, ipCounter, lastIpDate);
     if (!isAllowed) {
