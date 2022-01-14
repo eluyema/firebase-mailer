@@ -8,8 +8,6 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
-      - name: Prettier project
-        run: npm run prettier:fix
       - name: Eslint client
         working-directory: ./client
         run: npm run eslint:fix
