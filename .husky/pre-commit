@@ -2,9 +2,6 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npm run prettier:check
-cd client
-npm run eslint:check
-npm run stylelint:check
-cd ..
-cd functions
-npm run eslint:check
+npm run --prefix ./client eslint:check
+npm run --prefix ./client stylelint:check 
+npm run --prefix ./functions eslint:check 
