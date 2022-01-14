@@ -16,6 +16,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - name: Installing dependencies
+        run: npm install
       - name: Prettier project
         run: npm run prettier:fix
       - name: Eslint client
