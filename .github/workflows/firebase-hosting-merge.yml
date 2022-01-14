@@ -11,25 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Using Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - name: Installing dependencies
-        run: npm install
-      - name: Prettier project
-        run: npm run prettier:fix
-      - name: Eslint client
-        working-directory: ./client
-        run: npm run eslint:fix
-      - name: Stylelint client
-        working-directory: ./client
-        run: npm run stylelint:fix
-      - name: Eslint functions
-        working-directory: ./functions
-        run: npm run eslint:fix
-      - uses: actions/checkout@v2
       - name: Start build
         working-directory: ./client
         run: npm ci && npm run build

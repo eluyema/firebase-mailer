@@ -7,8 +7,8 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "eslint:fix": "npx eslint . --fix --ignore-path .gitignore",
-    "eslint:check": "npx eslint . --ignore-path .gitignore"
+    "eslint:fix": "eslint . --fix --ignore-path .gitignore",
+    "eslint:check": "eslint . --ignore-path .gitignore"
   },
   "engines": {
     "node": "14"

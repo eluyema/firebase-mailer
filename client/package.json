@@ -15,10 +15,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "eslint:fix": "npx eslint \"**/*.{js,jsx}\" --fix --ignore-path .gitignore",
-    "eslint:check": "npx eslint \"**/*.{js,jsx}\" --ignore-path .gitignore",
-    "stylelint:check": "npx stylelint  \"**/*.scss\" --ignore-path .gitignore",
-    "stylelint:fix": "npx stylelint --fix \"**/*.scss\" --fix --ignore-path .gitignore"
+    "eslint:fix": "eslint \"**/*.{js,jsx}\" --fix --ignore-path .gitignore",
+    "eslint:check": "eslint \"**/*.{js,jsx}\" --ignore-path .gitignore",
+    "stylelint:check": "stylelint  \"**/*.scss\" --ignore-path .gitignore",
+    "stylelint:fix": "stylelint --fix \"**/*.scss\" --fix --ignore-path .gitignore"
   },
   "eslintConfig": {
     "extends": [
