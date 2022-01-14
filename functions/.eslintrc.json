@@ -1,0 +1,9 @@
+{
+  "extends": ["plugin:sonarjs/recommended", "metarhia", "prettier"],
+  "plugins": ["sonarjs", "prettier"],
+  "rules": {
+    "sonarjs/cognitive-complexity": "error",
+    "sonarjs/no-identical-expressions": "error",
+    "prettier/prettier": "error"
+  }
+}
