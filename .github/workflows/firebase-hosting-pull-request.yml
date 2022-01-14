@@ -8,9 +8,24 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
+      - name: Cache node modules
+        id: npmCacheStep
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: |
+            ~/client/.npm
+            ~/functions/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - uses: actions/checkout@v2
       - name: Start build
         working-directory: ./client
+        if: steps.npmCacheStep.outputs.cache-hit != true
         run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -19,6 +34,7 @@ jobs:
           projectId: web-lab-2-form-mailer
       - name: Install npm packages for cloud functions
         working-directory: ./functions
+        if: steps.npmCacheStep.outputs.cache-hit != true
         run: npm ci
       - name: Unset previous env for functions
         uses: w9jds/firebase-action@master
