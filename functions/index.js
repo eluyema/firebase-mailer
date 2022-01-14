@@ -37,7 +37,7 @@ exports.mailer = functions.https.onRequest(async (request, response) => {
         });
       }
       const mail = {
-        from: `${name} <${functions.config().mailer.user}>`,
+        from: `${name}`,
         to: email,
         text: sanitizeHtml(text),
       };
