@@ -8,7 +8,7 @@ function Popup({ isError, message, setStatus }) {
       <div className={`popup-${isError ? 'error' : 'success'}`}>
         <div className="popup-header">
           <div className="popup-title">{isError ? 'Error' : 'Success'}</div>
-          <div className="popup-close" onClick={() => setStatus(false)}>
+          <div className="popup-close" onClick={() => setStatus('')}>
             &#10006;
           </div>
         </div>

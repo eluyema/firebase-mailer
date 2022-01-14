@@ -7,7 +7,6 @@ import Popup from './components/popup/popup';
 
 const initialState = {
   spinnerStatus: false,
-  popupStatus: false,
   popupMessage: '',
   popupIsError: false,
 };
@@ -18,8 +17,6 @@ function reducer(state, action) {
   switch (action.type) {
     case 'spinnerStatus':
       return { ...state, spinnerStatus: action.payload };
-    case 'popupStatus':
-      return { ...state, popupStatus: action.payload };
     case 'popupMessage':
       return { ...state, popupMessage: action.payload };
     case 'popupIsError':
@@ -37,7 +34,7 @@ function App() {
 
   const onSubmit = async (data) => {
     dispatch({ type: 'spinnerStatus', payload: true });
-    dispatch({ type: 'popupStatus', payload: false });
+    dispatch({ type: 'popupMessage', payload: '' });
     try {
       const response = await fetch('/api/mailer', {
         method: 'POST',
@@ -54,18 +51,17 @@ function App() {
       dispatch({ type: 'popupMessage', payload: 'Connection error' });
     } finally {
       dispatch({ type: 'spinnerStatus', payload: false });
-      dispatch({ type: 'popupStatus', payload: true });
     }
   };
   return (
     <div className="form-wrapper">
       {state.spinnerStatus && <Loader />}
-      {state.popupStatus && (
+      {state.popupMessage && (
         <Popup
           message={state.popupMessage}
           isError={state.popupIsError}
           setStatus={(value) =>
-            dispatch({ type: 'popupStatus', payload: value })
+            dispatch({ type: 'popupMessage', payload: value })
           }
         />
       )}

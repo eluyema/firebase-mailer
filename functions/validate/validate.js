@@ -8,19 +8,36 @@ function validateEmail(email) {
 }
 function validateMailData(name, email, text) {
   let dataStatus = 'Data is valid';
-  let isvalid = true;
+  let isValid = true;
   if (!(text && name && email)) {
     dataStatus = 'Some of requested data is empty';
-    isvalid = false;
+    isValid = false;
   }
   if (!validateEmail(email)) {
     dataStatus = 'Email is not valid';
-    isvalid = false;
+    isValid = false;
   }
   return {
     dataStatus,
-    isvalid,
+    isValid,
   };
 }
 
-module.exports = { validateEmail, validateMailData };
+function validateExtraProperty(body) {
+  const requestedProperty = ['email', 'name', 'text'];
+  return Object.keys(body).every((prop) => requestedProperty.includes(prop));
+}
+
+function validateRequestBody(body) {
+  if (!validateExtraProperty(body))
+    return { isValid: false, dataStatus: 'Request body have extra property' };
+  const { name, email, text } = body;
+  const validationMailInfo = validateMailData(name, email, text);
+  if (!validationMailInfo.isValid) return validationMailInfo;
+  return {
+    dataStatus: 'Body is valid',
+    isValid: true,
+  };
+}
+
+module.exports = { validateEmail, validateMailData, validateRequestBody };
