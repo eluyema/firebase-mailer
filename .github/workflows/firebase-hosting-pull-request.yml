@@ -23,7 +23,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Start build
         working-directory: ./client
-        if: steps.npmCacheStep.outputs.cache-hit != true
         run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -32,7 +31,6 @@ jobs:
           projectId: web-lab-2-form-mailer
       - name: Install npm packages for cloud functions
         working-directory: ./functions
-        if: steps.npmCacheStep.outputs.cache-hit != true
         run: npm ci
       - name: Unset previous env for functions
         uses: w9jds/firebase-action@master
