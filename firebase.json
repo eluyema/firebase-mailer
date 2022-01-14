@@ -1,10 +1,10 @@
 {
   "hosting": {
     "public": "client/build",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
-  },
-  "rewrite": {
-    "source": "/api/mailer",
-    "function": "mailer"
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrite": {
+      "source": "/api/mailer",
+      "function": "mailer"
+    }
   }
 }
