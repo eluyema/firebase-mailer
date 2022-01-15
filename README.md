@@ -1,4 +1,4 @@
-## Mailer
+# Mailer
 
 # Mailer project for sending by e-mail with a built-in rate limit.
 
