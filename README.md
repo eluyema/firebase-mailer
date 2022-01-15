@@ -1,6 +1,6 @@
 # Mailer
 
-# Mailer project for sending by e-mail with a built-in rate limit.
+## Mailer project for sending by e-mail with a built-in rate limit.
 
 The client part is implemented by the React library, deployed to firebase hosting.
 The backend was implemented on a firebase function.
