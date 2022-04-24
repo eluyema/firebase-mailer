@@ -5,4 +5,4 @@
 The client part is implemented by the React library, deployed to firebase hosting.
 The backend was implemented on a firebase function.
 
-Project delpoyed here - [https://web-lab-2-form-mailer--pr2-dev-kc4m48yl.web.app](https://web-lab-2-form-mailer--pr2-dev-kc4m48yl.web.app)
+Project delpoyed here - [https://web-lab-2-form-mailer.web.app/](https://web-lab-2-form-mailer.web.app/)
